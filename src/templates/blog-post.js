@@ -5,6 +5,7 @@ import Helmet from "react-helmet";
 import { graphql, Link } from "gatsby";
 import Layout from "../components/Layout";
 import Content, { HTMLContent } from "../components/Content";
+import { DiscussionEmbed } from "disqus-react";
 
 export const BlogPostTemplate = ({
   content,
@@ -12,9 +13,15 @@ export const BlogPostTemplate = ({
   description,
   tags,
   title,
-  helmet
+  helmet,
+  id
 }) => {
   const PostContent = contentComponent || Content;
+  const disqusShortname = "friendly-wilson";
+  const disqusConfig = {
+    identifier: id,
+    title
+  };
 
   return (
     <section className="section">
@@ -41,8 +48,7 @@ export const BlogPostTemplate = ({
             ) : null}
           </div>
         </div>
-        <div id="commento" />
-        <script src="https://cdn.commento.io/js/commento.js" />
+        <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
       </div>
     </section>
   );
@@ -68,6 +74,7 @@ const BlogPost = ({ data }) => {
         helmet={<Helmet title={`${post.frontmatter.title} | Blog`} />}
         tags={post.frontmatter.tags}
         title={post.frontmatter.title}
+        id={post.id}
       />
     </Layout>
   );
