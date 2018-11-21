@@ -14,14 +14,9 @@ export const BlogPostTemplate = ({
   tags,
   title,
   helmet,
-  id
+  identifier
 }) => {
   const PostContent = contentComponent || Content;
-  const disqusShortname = "friendly-wilson";
-  const disqusConfig = {
-    identifier: id,
-    title
-  };
 
   return (
     <section className="section">
@@ -48,7 +43,10 @@ export const BlogPostTemplate = ({
             ) : null}
           </div>
         </div>
-        <DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
+        <DiscussionEmbed
+          shortname={"friendly-wilson"}
+          config={{ identifier, title }}
+        />
       </div>
     </section>
   );
@@ -74,7 +72,7 @@ const BlogPost = ({ data }) => {
         helmet={<Helmet title={`${post.frontmatter.title} | Blog`} />}
         tags={post.frontmatter.tags}
         title={post.frontmatter.title}
-        id={post.id}
+        identifier={post.id}
       />
     </Layout>
   );
